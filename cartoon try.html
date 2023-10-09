@@ -1,5 +1,52 @@
 <!DOCTYPE html>
-<h1>I am a big head</h1>
-<p> I was running behind on work and I needed to get things done. </p>
-<a href="https://google.com" target="_blank" title="Let's go to Google"> Click me I and a link</a>
+<html>
+    <head></head>
+    <body class style>
+        <div id="modalPlaceHolder"></div>
+        <script data-placeholder-id="modalPlaceHolder" data-modal-id="cookie-consent-modal" data-modal-html="<dialog id=&quot;cookie-consent-modal&quot; class=&quot;EvYfA&quot;><button type=&quot;button&quot; id=&quot;cookie-consent-modal-close&quot; class=&quot;kSpJ0 jpBZ0&quot; title=&quot;Close&quot;><svg width=&quot;32&quot; height=&quot;32&quot; class=&quot;BlUqg&quot; viewBox=&quot;0 0 24 24&quot; version=&quot;1.1&quot; aria-hidden=&quot;false&quot;><desc lang=&quot;en-US&quot;>An X shape</desc><path d=&quot;M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z&quot;></path></svg></button><p class=&quot;EhsID&quot;>Unsplash uses cookies and similar technologies to secure our site, provide useful features to free and paying users, and to ensure optimal performance. By clicking &amp;quot;Accept all cookies&amp;quot; or closing this prompt, you consent to the use of all cookies. By clicking &amp;quot;Accept essential only&amp;quot;, you consent only to the use of cookies that are strictly necessary for the site to function. See our <a href=&quot;/cookies&quot;>Cookie Policy</a> for more info.</p><a href=&quot;/cookies#manage-consent&quot;>Manage cookies</a><div class=&quot;jbCub&quot;><button id=&quot;cookie-consent-modal-object&quot; type=&quot;button&quot; class=&quot;CwMIr DQBsa p1cWU jpBZ0 EzsBC KHq0c Olora I0aPD dEcXu crmLf&quot;>Accept essential only</button><button id=&quot;cookie-consent-modal-consent&quot; type=&quot;button&quot; autofocus=&quot;&quot; class=&quot;a1ISs DQBsa p1cWU jpBZ0 EzsBC KHq0c a2bYd I0aPD dEcXu crmLf&quot;>Accept all cookies</button></div></dialog>">"use strict";
+        (() => {
+            const script = document.currentScript;
+            const params = script.dataset;
+            const placeholderId = params.placeholderId;
+            const modalId = params.modalId;
+            const modalHtml = params.modalHtml;
+            const unsplash = window.__UNSPLASH__;
+            const consentState = unsplash.consent;
+            if (consentState.tag === "Pending") {
+                const modalPlaceholder = document.getElementById(
+                    placeholderId
+                    );
+                    modalPlaceholder.outerHTML = modalHtml;
+                const modal = document.getElementById(modalId);
+                const consentButton = document.getElementById(
+                        `${modalId}-consent`
+                        );
+                const objectButton = document.getElementById(
+                        `${modalId}-object`
+                        );
+                const closeButton = document.getElementById(
+                        `${modalId}-close`
+                        );
+                void consentState.value().then(() => {
+                        modal.close();
+                    });
+                const handleClick = (action, consent) => () => {
+                    void consentState.setConsent(action, consent);
+                 };
+                consentButton.addEventListener(
+                    "click",
+                    handleClick("accepted-cookie-consent", true)
+                    );
+                closeButton.addEventListener(
+                    "click",
+                    handleClick("closed-cookie-consent", true)
+                    );
+                objectButton.addEventListener(
+                    "click",
+                    handleClick("rejected-cookie-consent", false)
+                    );
+                    modal.show();
+                }})();
+
+    </body>
 </html>
